@@ -1,4 +1,5 @@
 module.exports = {
+<<<<<<< HEAD
     apps: [
         {
             name: "my-app",
@@ -9,4 +10,3 @@ module.exports = {
             },
         },
     ],
-};
