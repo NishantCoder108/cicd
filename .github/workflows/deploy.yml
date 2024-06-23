@@ -22,4 +22,4 @@ jobs:
               run: sudo apt-get install -y rsync
 
             - name: Deploy code to AWS instance
-              run: rsync -r --delete-after --quiet $GITHUB_WORKSPACE/ ubuntu@${{secrets.AWS_IP}}
+              run: rsync -r --delete-after --quiet $GITHUB_WORKSPACE/ ubuntu@${{secrets.AWS_IP}}:/home/ubuntu/myapp/
