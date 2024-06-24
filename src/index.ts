@@ -13,6 +13,11 @@ app.get("/", (req, res: Response) => {
                 state: "Maharashtra",
             },
             hobbies: "Programming, Coding",
+            skills: {
+                frontend: "React",
+                backend: "NodeJS",
+                deploy: "ci/cd ,github-actions",
+            },
         },
     });
 });
