@@ -4,8 +4,8 @@ const app = express();
 
 app.get("/", (req, res: Response) => {
     res.send({
-        message: "One day will come , you will be very happy!",
-        god:"belief in god"
+        message: "Hi God",
+       
     });
 });
 
