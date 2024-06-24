@@ -13,13 +13,10 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Install SSH key
-              uses: webfactory/ssh-agent@v0.5.3
-              with:
-                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-            - name: Install rsync
-              run: sudo apt-get install -y rsync
-
-            - name: Deploy code to AWS instance
-              run: rsync -r --delete-after --quiet $GITHUB_WORKSPACE/ ubuntu@${{secrets.AWS_IP}}:/home/ubuntu/cicd/
+            - name: SSH and deploy to AWS
+              env:
+                  SH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_}}
+              run: |
+                  echo "$SSH_PRIVATE_KEY" > keyfile
+                  chmod 600 keyfile
+                  ssh -t -i keyfile ubuntu@${{secrets.AWS_IP}} "sudo bash ~/deploy.sh"
