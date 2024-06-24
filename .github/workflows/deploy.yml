@@ -13,13 +13,13 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: SSH and deploy to AWS
-              env:
-                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY}}
-                  AWS_IP: ${{ secrets.AWS_IP }}
+            - name: Setup SSH
               run: |
-                  echo "$SSH_PRIVATE_KEY" > keyfile
-                  chmod 600 keyfile
                   mkdir -p ~/.ssh
-                  cp known_hosts ~/.ssh/known_hosts
-                  ssh -t -i keyfile ubuntu@${AWS_IP} "sudo bash ~/deploy.sh"
+                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan -t rsa ${{ secrets.AWS_IP }} >> ~/.ssh/known_hosts
+
+            - name: Deploy to AWS
+              run: |
+                  ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.AWS_IP }} "sudo bash ~/deploy.sh"
