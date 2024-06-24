@@ -4,21 +4,7 @@ const app = express();
 
 app.get("/", (req, res: Response) => {
     res.send({
-        message: "Hello World",
-        userInfo: {
-            name: "Nishant",
-            age: 25,
-            address: {
-                city: "Mumbai",
-                state: "Maharashtra",
-            },
-            hobbies: "Programming, Coding",
-            skills: {
-                frontend: "React",
-                backend: "NodeJS",
-                deploy: "ci/cd ,github-actions",
-            },
-        },
+        message: "One day will come , you will be very happy!",
     });
 });
 
