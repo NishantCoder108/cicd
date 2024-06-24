@@ -1,27 +1,24 @@
 name: Deploy to AWS
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+    deploy:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      - name: Install SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: SSH and deploy to AWS
-        env:
-          AWS_IP: ${{ secrets.AWS_IP }}
-        run: |
-          echo "$SSH_PRIVATE_KEY" > keyfile
-          chmod 600 keyfile
-          ssh -o StrictHostKeyChecking=no -i keyfile ubuntu@${AWS_IP} "sudo bash ~/deploy.sh"
+            - name: SSH and deploy to AWS
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY}}
+              run: |
+                  echo "$SSH_PRIVATE_KEY" > keyfile
+                  chmod 600 keyfile
+                  mkdir -p ~/.ssh
+                  cp known_hosts ~/.ssh/known_hosts
+                  ssh -t -i keyfile ubuntu@ec2-3-110-220-176.ap-south-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
