@@ -4,7 +4,7 @@ const app = express();
 
 app.get("/", (req, res: Response) => {
     res.send({
-        message: "Rohan is a good boy",
+        message: "Nishant is a smart boy",
     });
 });
 
