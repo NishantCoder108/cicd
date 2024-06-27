@@ -4,7 +4,11 @@ const app = express();
 
 app.get("/", (req, res: Response) => {
     res.send({
-        message: "Nishant Kumar",
+        message: "Thank you god!",
+        user: {
+            name: "Nishant",
+            profession: "Full stack developer",
+        },
     });
 });
 

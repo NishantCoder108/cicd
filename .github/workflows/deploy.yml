@@ -9,6 +9,9 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
 
+        env:
+            CICD_IP_ADD: ${{ secrets.CICD_IP_ADD }}
+
         steps:
             - name: Checkout repository
               uses: actions/checkout@v2
@@ -19,12 +22,13 @@ jobs:
                   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
             - name: Add EC2 host to known hosts
-              run: ssh-keyscan -H 3.110.220.176 >> ~/.ssh/known_hosts
+              run: ssh-keyscan -H $CICD_IP_ADD >> ~/.ssh/known_hosts
 
             - name: Deploy to EC2
+
               run: |
                   # Replace the following with your deployment script or commands
-                  ssh ubuntu@3.110.220.176 << EOF
+                  ssh ubuntu@$CICD_IP_ADD << EOF
                   cd /home/ubuntu/github_code_base
                   git pull origin main
                   chmod +x deploy.sh
