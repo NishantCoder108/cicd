@@ -1,4 +1,4 @@
-name: Deploy to AWS
+name: Deploy to EC2
 
 on:
     push:
@@ -10,16 +10,37 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout code
+            - name: Checkout repository
               uses: actions/checkout@v2
 
-            - name: SSH and deploy to AWS
-              env:
-                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY}}
-                  AWS_IP: ${{ secrets.AWS_IP }}
+            - name: Setup SSH
+              uses: webfactory/ssh-agent@v0.5.0
+              with:
+                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+            - name: Add EC2 host to known hosts
+              run: ssh-keyscan -H 3.110.220.176 >> ~/.ssh/known_hosts
+
+            - name: Deploy to EC2
               run: |
-                  echo "$SSH_PRIVATE_KEY" > keyfile
-                  chmod 600 keyfile
-                  mkdir -p ~/.ssh
-                  cp known_hosts ~/.ssh/known_hosts
-                  ssh -t -i keyfile ubuntu@${AWS_IP} "sudo bash ~/deploy.sh"
+                  # Replace the following with your deployment script or commands
+                  ssh ubuntu@3.110.220.176 "cd /home/ubuntu/github_code_base && git pull origin main"                    
+
+
+
+                  # ==================================
+
+
+                  #     - name: SSH and deploy to AWS
+                  #       env:
+                  #           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY}}
+                  #           AWS_IP: ${{ secrets.AWS_IP }}
+                  #       run: |
+                  #           echo "$SSH_PRIVATE_KEY" > keyfile
+                  #           chmod 600 keyfile
+                  #           mkdir -p ~/.ssh
+                  #           cp known_hosts ~/.ssh/known_hosts
+                  #           ssh -t -i keyfile ubuntu@${AWS_IP} "sudo bash ~/deploy.sh"
+
+
+                  #           ----------------
