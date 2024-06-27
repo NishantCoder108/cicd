@@ -24,23 +24,4 @@ jobs:
             - name: Deploy to EC2
               run: |
                   # Replace the following with your deployment script or commands
-                  ssh ubuntu@3.110.220.176 "cd /home/ubuntu/github_code_base && git pull origin main"                    
-
-
-
-                  # ==================================
-
-
-                  #     - name: SSH and deploy to AWS
-                  #       env:
-                  #           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY}}
-                  #           AWS_IP: ${{ secrets.AWS_IP }}
-                  #       run: |
-                  #           echo "$SSH_PRIVATE_KEY" > keyfile
-                  #           chmod 600 keyfile
-                  #           mkdir -p ~/.ssh
-                  #           cp known_hosts ~/.ssh/known_hosts
-                  #           ssh -t -i keyfile ubuntu@${AWS_IP} "sudo bash ~/deploy.sh"
-
-
-                  #           ----------------
+                  ssh ubuntu@3.110.220.176 "cd /home/ubuntu/github_code_base && git pull origin main ./deploy.sh"
