@@ -24,4 +24,8 @@ jobs:
             - name: Deploy to EC2
               run: |
                   # Replace the following with your deployment script or commands
-                  ssh ubuntu@3.110.220.176 "cd /home/ubuntu/github_code_base && git pull origin main ./deploy.sh"
+                  ssh ubuntu@3.110.220.176 << EOF
+                  cd /home/ubuntu/github_code_base
+                  git pull origin main
+                  ./deploy.sh
+                  EOF
