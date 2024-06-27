@@ -27,5 +27,6 @@ jobs:
                   ssh ubuntu@3.110.220.176 << EOF
                   cd /home/ubuntu/github_code_base
                   git pull origin main
+                  chmod +x deploy.sh
                   ./deploy.sh
                   EOF
